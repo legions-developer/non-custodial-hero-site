@@ -1,5 +1,8 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import React from "react";
+import { motion } from "framer-motion";
 
 interface BoxProps {
   className?: string;
@@ -10,6 +13,10 @@ interface BoxProps {
   children?: React.ReactNode;
   connectionPosition?: "left" | "right";
   text?: string;
+  animation?: {
+    delay?: number;
+    duration?: number;
+  };
 }
 
 const Box = ({
@@ -21,9 +28,18 @@ const Box = ({
   connectionPosition = "right",
   children,
   text,
+  animation,
 }: BoxProps) => {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: animation?.duration || 2,
+        delay: animation?.delay || 0,
+        ease: "easeIn",
+        type: "spring",
+      }}
       style={{ height: `${height}px`, width: `${width}px` }}
       className={cn(
         bgColor ? bgColor : "bg-white",
@@ -37,7 +53,7 @@ const Box = ({
           connectionPosition === "right"
             ? "left-[100%] translate-x-1/3"
             : "right-[100%] -translate-x-1/3",
-          "absolute items-center flex flex-col justify-evenly top-1/2 -translate-y-1/2 h-2/3 w-3 bg-[#212121] rounded"
+          "absolute items-center flex flex-col justify-evenly top-1/2 -translate-y-1/2 h-2/3 w-3 rounded"
         )}
       >
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
@@ -54,9 +70,11 @@ const Box = ({
         )}
       >
         {children}
-        {text && <p className="text-xs text-white font-semibold font-mono">{text}</p>}
+        {text && (
+          <p className="text-xs text-white font-semibold font-mono">{text}</p>
+        )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

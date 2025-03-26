@@ -1,21 +1,163 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Box from "@/components/ui/Box";
-import React from "react";
+import React, { useState } from "react";
+import { AuroraBackground } from "@/components/ui/aurora-background";
+import { cn } from "@/lib/utils";
+import Particles from "@/components/ui/particles";
+
+const headerOptions = [
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "About",
+    href: "/about",
+  },
+  {
+    label: "Docs",
+    href: "/docs",
+  },
+  {
+    label: "Blog",
+    href: "/blog",
+  },
+];
 
 const HeroSection = () => {
   return (
-    <div className="h-[100svh] w-full flex items-center justify-center">
-      {/* Main */}
-      <div className="h-[700px] shrink-0 items-center min-w-[1200px] w-[1200px] flex flex-row justify-between relative">
-        <AnimatedConnectionsSVG />
-        <LeftBoxes />
-        <MiddleCircle />
-        <RightBoxes />
+    <AuroraBackground>
+      <div className="h-[100svh] w-full flex items-center justify-center overflow-hidden relative">
+        {/* Header */}
+        <Header />
+        {/* Particles */}
+        <Particles
+          className="pointer-events-none absolute inset-0 z-20 opacity-50"
+          quantity={100}
+          ease={80}
+          color="#ffffff"
+          refresh
+        />
+        {/* Main */}
+        <div className="h-[700px] shrink-0 items-center min-w-[1200px] w-[1200px] flex flex-row justify-between relative get-skewed">
+          <AnimatedConnectionsSVG />
+          <LeftBoxes />
+          <MiddleCircle />
+          <RightBoxes />
+        </div>
       </div>
-    </div>
+      {/* Bottom Title and description */}
+      <div className="absolute bottom-4 justify-center items-center left-0 right-0 p-4 gap-3 flex flex-col text-center">
+        <div className="flex flex-row items-center gap-4">
+          <div className="iceberg text-xl bg-gradient-to-r from-gray-500 to-white text-transparent bg-clip-text">
+            L E G I O N
+          </div>
+          <div className="h-1 w-1 bg-white/80 rounded-full"></div>
+          <div className="bg-gradient-to-br from-emerald-500 via-emerald-400 to-emerald-500 px-2 py-1 rounded text-xs font-semibold text-black">
+            A Non-Custodial Option Protocol
+          </div>
+        </div>
+        <div>
+          <h1 className="text-5xl">Web3 Native</h1>
+          <h2 className="text-5xl">Decentralized Platform</h2>
+        </div>
+        <p className="text-sm max-w-[500px] px-4 text-white/80">
+          Building the next generation of decentralized applications powered by
+          blockchain technology and trustless infrastructure.
+        </p>
+      </div>
+    </AuroraBackground>
   );
 };
 
 export default HeroSection;
+
+const Header = () => {
+  const [selectedOption, setSelectedOption] = useState<string | null>(
+    headerOptions[0].label
+  );
+  const [dimensions, setDimensions] = useState({ width: 0, left: 0 });
+  const navRefs = React.useRef<{ [key: string]: HTMLParagraphElement }>({});
+
+  React.useEffect(() => {
+    if (selectedOption && navRefs.current[selectedOption]) {
+      const element = navRefs.current[selectedOption];
+      const { width, left } = element.getBoundingClientRect();
+      const parentLeft =
+        element.parentElement?.getBoundingClientRect().left || 0;
+      setDimensions({ width, left: left - parentLeft });
+    }
+  }, [selectedOption]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95, y: -100 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+      className="h-[60px] px-1.5 absolute top-8 bg-white/[0.02] border border-white/[0.02] rounded-xl backdrop-blur-3xl flex items-center gap-8 z-50 overflow-hidden"
+    >
+      <div className="h-12 w-12 shrink-0 rounded-lg bg-background flex items-center justify-center">
+        <span className="text-white font-mono text-xl font-bold">L</span>
+      </div>
+      <div className="flex flex-row items-start gap-8 relative">
+        {headerOptions.map((option) => (
+          <p
+            ref={(el) => {
+              if (el) navRefs.current[option.label] = el;
+            }}
+            key={option.label}
+            className={cn(
+              "font-mono font-medium text-xs cursor-pointer duration-200 hover:text-white pt-2 pb-1",
+              selectedOption === option.label
+                ? "text-white"
+                : "text-muted-foreground"
+            )}
+            onClick={() => setSelectedOption(option.label)}
+          >
+            {option.label}
+          </p>
+        ))}
+        <motion.div
+          className="absolute -bottom-3.5 h-[2px] bg-gradient-to-r from-[#22262E] via-white/50 to-[#22262E] rounded-full shadow-[0_0_25px_2px_rgba(255,255,255,1)]"
+          initial={false}
+          animate={{
+            width: dimensions.width,
+            left: dimensions.left,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 500,
+            damping: 30,
+          }}
+        />
+      </div>
+      <div className="flex flex-row items-start gap-4">
+        <button className="cursor-pointer h-12 shrink-0 rounded-xl hover:contrast-125 duration-200 pl-4 pr-3 bg-gradient-to-br from-emerald-700 to-emerald-400 flex items-center justify-center border border-emerald-700 shadow-[inset_0px_0px_4px_rgba(0,0,0,0.4)]">
+          <span className="text-white font-bold font-mono text-xs">
+            Launch App
+          </span>
+          <span className="ml-1">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              stroke="#fff"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
+            >
+              <path d="M5.75 12.25 10.25 8l-4.5-4.25" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </motion.div>
+  );
+};
 
 const firstPaths = [
   // Bitcoin Paths
@@ -96,10 +238,61 @@ const AnimatedConnectionsSVG = () => {
 
   return (
     <svg className="h-full w-full absolute top-0 left-0" viewBox="0 0 1200 700">
+      {/* Radial Gradient */}
+      <defs>
+        <mask id="white-mask">
+          <ellipse
+            cx="600"
+            cy="350"
+            rx="1000"
+            ry="800"
+            fill="url(#white-grad)"
+          />
+        </mask>
+        <radialGradient id="white-grad" fx="0.5">
+          <stop offset="0%" stopColor="white" />
+          <stop offset="100%" stopColor="transparent" />
+        </radialGradient>
+      </defs>
+      {/* Background Grid */}
+      <g mask="url(#white-mask)" className="text-muted" fill="none">
+        {/* Vertical Lines */}
+        {Array.from({ length: 24 }).map((_, i) => {
+          const spacing = 54;
+
+          return (
+            <line
+              key={`v-${i}`}
+              x1={i * spacing}
+              y1="0"
+              x2={i * spacing}
+              y2="700"
+              stroke="white"
+              strokeOpacity={i % 4 === 0 ? 0.04 : 0.01}
+            />
+          );
+        })}
+        {/* Horizontal Lines */}
+        {Array.from({ length: 24 }).map((_, i) => {
+          const spacing = 54;
+
+          return (
+            <line
+              key={`h-${i}`}
+              x1="0"
+              y1={i * spacing}
+              x2="1200"
+              y2={i * spacing}
+              stroke="white"
+              strokeOpacity={i % 4 === 0 ? 0.04 : 0.01}
+            />
+          );
+        })}
+      </g>
       {/* First Paths */}
-      <g className="text-muted" fill="none" stroke="currentColor">
+      <g className="text-muted/40" fill="none" stroke="currentColor">
         {firstPaths.map((path, index) => {
-          const seconds = getAnimationDelay(index);
+          const seconds = getAnimationDelay(index, 0.8);
 
           return (
             <path
@@ -114,10 +307,10 @@ const AnimatedConnectionsSVG = () => {
                 attributeName="stroke-dashoffset"
                 from="100"
                 to="0"
-                dur="2s"
+                dur="0.5s"
                 fill="freeze"
                 calcMode="spline"
-                keySplines="0, -1.59, 1, 3.67"
+                keySplines="0, 0, 0.2, 1"
                 keyTimes="0; 1"
                 begin={`${seconds}s`}
               />
@@ -134,28 +327,28 @@ const AnimatedConnectionsSVG = () => {
         })}
       </g>
       {/* Second Paths */}
-      <g className="text-muted" fill="none" stroke="currentColor">
+      <g className="text-muted/40" fill="none" stroke="currentColor">
         {secondPaths.map((path, index) => {
-          const seconds = getAnimationDelay(index);
+          const seconds = getAnimationDelay(index, 1.5);
 
           return (
             <path
               key={index}
               d={path}
               fill="none"
-              strokeDasharray="100 100"
-              pathLength="100"
+              strokeDasharray="1000 1000"
+              pathLength="1000"
               strokeOpacity="0"
             >
               <animate
                 attributeName="stroke-dashoffset"
-                from="100"
+                from="1000"
                 to="0"
-                dur="2s"
+                dur="0.5s"
                 fill="freeze"
                 calcMode="spline"
-                keySplines="0, -1.59, 1, 3.67"
                 keyTimes="0; 1"
+                keySplines="0, 0, 0.2, 1"
                 begin={`${seconds}s`}
               />
               <animate
@@ -196,13 +389,13 @@ const AnimatedConnectionsSVG = () => {
           <g key={index} mask={`url(#first-mask-${index})`}>
             <circle
               style={{
-                offsetPath: `path("${path} h 180")`,
-                animationDelay: `${getAnimationDelay(index)}s`,
+                offsetPath: `path("${path} h 350")`,
+                animationDelay: `${getAnimationDelay(index, 1)}s`,
               }}
               className="cross-chain"
               cx="0"
               cy="0"
-              r="100"
+              r="200"
               fill="url(#white-grad)"
             />
           </g>
@@ -213,13 +406,13 @@ const AnimatedConnectionsSVG = () => {
           <g key={index} mask={`url(#second-mask-${index})`}>
             <circle
               style={{
-                offsetPath: `path("${path} h 180")`,
-                animationDelay: `${getAnimationDelay(index, 2.6)}s`,
+                offsetPath: `path("${path} h 350")`,
+                animationDelay: `${getAnimationDelay(index, 3.1)}s`,
               }}
               className="cross-chain"
               cx="0"
               cy="0"
-              r="100"
+              r="200"
               fill="url(#white-grad)"
             />
           </g>
@@ -229,24 +422,383 @@ const AnimatedConnectionsSVG = () => {
   );
 };
 
+const middleCircleTextMotionProps = {
+  initial: { y: 20, opacity: 0 },
+  animate: { y: 0, opacity: 1 },
+};
+
 const MiddleCircle = () => {
   return (
-    <div className="h-54 w-54 bg-transparent rounded-full border-4 border-white relative">
+    <div className="relative">
+      {/* Middle circle text */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl font-medium">
+        <div className="flex flex-col items-center">
+          <div className="flex flex-row">
+            <motion.div
+              {...middleCircleTextMotionProps}
+              transition={{
+                duration: 0.4,
+                delay: 2.2,
+              }}
+            >
+              Cross
+            </motion.div>
+            <motion.div
+              {...middleCircleTextMotionProps}
+              transition={{
+                duration: 0.4,
+                delay: 2.4,
+              }}
+            >
+              -
+            </motion.div>
+            <motion.div
+              {...middleCircleTextMotionProps}
+              transition={{
+                duration: 0.4,
+                delay: 2.6,
+              }}
+            >
+              Chain
+            </motion.div>
+          </div>
+          <div className="flex flex-row gap-1.5">
+            <motion.div
+              {...middleCircleTextMotionProps}
+              transition={{
+                duration: 0.4,
+                delay: 2.8,
+              }}
+            >
+              Gateway
+            </motion.div>
+            <motion.div
+              {...middleCircleTextMotionProps}
+              transition={{
+                duration: 0.4,
+                delay: 3,
+              }}
+            >
+              Protocol
+            </motion.div>
+          </div>
+        </div>
+      </div>
       {/* Connections Div */}
-      <div className="absolute left-[100%] translate-x-2 items-center flex flex-col justify-evenly top-1/2 -translate-y-1/2 w-3 bg-[#212121] rounded h-[54px]">
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 0.4,
+          delay: 0.6,
+        }}
+        className="absolute right-[100%] -translate-x-2 items-center flex flex-col justify-evenly top-1/2 -translate-y-1/2 w-3 bg-[#212121] rounded h-[54px]"
+      >
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
-      </div>
-      <div className="absolute right-[100%] -translate-x-2 items-center flex flex-col justify-evenly top-1/2 -translate-y-1/2 w-3 bg-[#212121] rounded h-[54px]">
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 0.4,
+          delay: 1.2,
+        }}
+        className="absolute left-[100%] translate-x-2 items-center flex flex-col justify-evenly top-1/2 -translate-y-1/2 w-3 bg-[#212121] rounded h-[54px]"
+      >
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
-      </div>
+      </motion.div>
+
+      <svg className="h-54 w-54" viewBox="0 0 104 104" overflow="visible">
+        {/* White Path Shadow */}
+        <circle
+          className="blur-[4px]"
+          cx="52"
+          cy="52"
+          r="50"
+          fill="none"
+          stroke="white"
+          strokeWidth="2"
+          opacity="0.6"
+          strokeLinecap="round"
+          pathLength="100"
+          strokeDasharray="100 100"
+          strokeDashoffset="100"
+          strokeOpacity="0"
+          transform="rotate(-90)"
+          style={{ transformOrigin: "center" }}
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="100"
+            to="25"
+            dur="2s"
+            fill="freeze"
+            keySplines="0,0.95,1,1"
+            calcMode="spline"
+            keyTimes="0; 1"
+            begin="1.2s"
+          />
+          <animate
+            attributeName="stroke-opacity"
+            from="0"
+            to="1"
+            dur="0.2s"
+            fill="freeze"
+            begin="1.2s"
+          />
+        </circle>
+        {/* White Path */}
+        <circle
+          cx="52"
+          cy="52"
+          r="50"
+          fill="none"
+          stroke="white"
+          strokeWidth="2"
+          strokeLinecap="round"
+          pathLength="100"
+          strokeDasharray="100 100"
+          strokeDashoffset="100"
+          strokeOpacity="0"
+          transform="rotate(-90)"
+          style={{ transformOrigin: "center" }}
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="100"
+            to="26.5"
+            dur="2s"
+            fill="freeze"
+            keySplines="0,0.95,1,1"
+            calcMode="spline"
+            keyTimes="0; 1"
+            begin="1.2s"
+          />
+          <animate
+            attributeName="stroke-opacity"
+            from="0"
+            to="1"
+            dur="0.2s"
+            fill="freeze"
+            begin="1.2s"
+          />
+        </circle>
+        {/* Green Path Shadow */}
+        <circle
+          className="blur-[4px]"
+          cx="52"
+          cy="52"
+          r="50"
+          fill="none"
+          stroke="#00BC7E"
+          strokeWidth="2"
+          opacity="0.6"
+          strokeLinecap="round"
+          pathLength="100"
+          strokeDasharray="100 100"
+          strokeDashoffset="100"
+          strokeOpacity="0"
+          transform="rotate(-180)"
+          style={{ transformOrigin: "center" }}
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="100"
+            to="76.5"
+            dur="1.5s"
+            fill="freeze"
+            keySplines="0,0.95,1,1"
+            calcMode="spline"
+            keyTimes="0; 1"
+            begin="2.6s"
+          />
+          <animate
+            attributeName="stroke-opacity"
+            from="0"
+            to="1"
+            dur="0.2s"
+            fill="freeze"
+            begin="2.6s"
+          />
+        </circle>
+        {/* Green Path */}
+        <circle
+          cx="52"
+          cy="52"
+          r="50"
+          fill="none"
+          stroke="#00BC7E"
+          strokeWidth="2"
+          strokeLinecap="round"
+          pathLength="100"
+          strokeDasharray="100 100"
+          strokeDashoffset="100"
+          strokeOpacity="0"
+          transform="rotate(-180)"
+          style={{ transformOrigin: "center" }}
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="100"
+            to="76.5"
+            dur="1.5s"
+            fill="freeze"
+            keySplines="0,0.95,1,1"
+            calcMode="spline"
+            keyTimes="0; 1"
+            begin="2.6s"
+          />
+          <animate
+            attributeName="stroke-opacity"
+            from="0"
+            to="1"
+            dur="0.2s"
+            fill="freeze"
+            begin="2.6s"
+          />
+        </circle>
+        {/* Dashed middle circle */}
+        <circle
+          mask="url(#dashed-mask)"
+          cx="52"
+          cy="52"
+          r="45"
+          strokeWidth="1"
+          fill="none"
+          stroke="white"
+          strokeDasharray="10 5 5 2 2 5 5 10"
+          strokeDashoffset="100"
+          className="animate-spin"
+          style={{ transformOrigin: "center", animationDuration: "16s" }}
+          opacity="0"
+        >
+          <animate
+            attributeName="opacity"
+            from="0"
+            to="1"
+            dur="0.5s"
+            fill="freeze"
+            begin="2s"
+          />
+        </circle>
+        {/* back grid */}
+        <g mask="url(#grid-mask)" opacity="0">
+          <animate
+            attributeName="opacity"
+            from="0"
+            to="1"
+            dur="0.5s"
+            fill="freeze"
+            begin="3.2s"
+          />
+          {/* Vertical lines */}
+          {Array.from({ length: 11 }).map((_, i) => {
+            const spacing = 10;
+            const delay = 4 + i * 0.1;
+
+            return (
+              <line
+                key={`v-${i}`}
+                x1={2 + i * spacing}
+                y1="0"
+                x2={2 + i * spacing}
+                y2="104"
+                stroke="white"
+                strokeWidth="0.5"
+                opacity="0.08"
+                strokeLinecap="round"
+                strokeDasharray="100 100"
+                strokeDashoffset="100"
+              >
+                <animate
+                  attributeName="stroke-dashoffset"
+                  from="100"
+                  to="0"
+                  dur="1s"
+                  fill="freeze"
+                  calcMode="spline"
+                  keySplines="0,0.95,1,1"
+                  keyTimes="0; 1"
+                  begin={`${delay}s`}
+                />
+              </line>
+            );
+          })}
+          {/* Horizontal lines */}
+          {Array.from({ length: 11 }).map((_, i) => {
+            const spacing = 10;
+            const delay = 4 + i * 0.1;
+
+            return (
+              <line
+                key={`h-${i}`}
+                x1="0"
+                y1={2 + i * spacing}
+                x2="104"
+                y2={2 + i * spacing}
+                stroke="white"
+                strokeWidth="0.5"
+                opacity="0.08"
+                strokeLinecap="round"
+                strokeDasharray="100 100"
+                strokeDashoffset="100"
+              >
+                <animate
+                  attributeName="stroke-dashoffset"
+                  from="100"
+                  to="0"
+                  dur="1s"
+                  fill="freeze"
+                  calcMode="spline"
+                  keySplines="0,0.95,1,1"
+                  keyTimes="0; 1"
+                  begin={`${delay}s`}
+                />
+              </line>
+            );
+          })}
+        </g>
+
+        {/* Animated stroke that reveals the dashed circle */}
+        <defs>
+          <mask id="grid-mask">
+            <circle cx="52" cy="52" r="50" fill="white" stroke="none" />
+          </mask>
+          <mask id="dashed-mask">
+            <circle
+              cx="52"
+              cy="52"
+              r="45"
+              stroke="white"
+              strokeWidth="1"
+              fill="none"
+              strokeDasharray="283"
+              strokeDashoffset="283"
+              strokeLinecap="round"
+            >
+              <animate
+                attributeName="stroke-dashoffset"
+                from="283"
+                to="0"
+                dur="2s"
+                fill="freeze"
+                calcMode="spline"
+                keySplines="0,0.95,1,1"
+                keyTimes="0; 1"
+                begin="3.2s"
+              />
+            </circle>
+          </mask>
+        </defs>
+      </svg>
     </div>
   );
 };
@@ -254,7 +806,13 @@ const MiddleCircle = () => {
 const RightBoxes = () => {
   return (
     <div className="flex h-full flex-col justify-evenly">
-      <Box text="Wallet 1" connectionPosition="left">
+      <Box
+        text="Wallet 1"
+        connectionPosition="left"
+        animation={{
+          delay: 1.5,
+        }}
+      >
         <svg
           className="h-6 w-6"
           viewBox="0 0 16 16"
@@ -267,7 +825,13 @@ const RightBoxes = () => {
           />
         </svg>
       </Box>
-      <Box text="Wallet 2" connectionPosition="left">
+      <Box
+        text="Wallet 2"
+        connectionPosition="left"
+        animation={{
+          delay: 1.6,
+        }}
+      >
         <svg
           className="h-6 w-6"
           viewBox="0 0 16 16"
@@ -280,7 +844,13 @@ const RightBoxes = () => {
           />
         </svg>
       </Box>
-      <Box text="Wallet 3" connectionPosition="left">
+      <Box
+        text="Wallet 3"
+        connectionPosition="left"
+        animation={{
+          delay: 1.7,
+        }}
+      >
         <svg
           className="h-6 w-6"
           viewBox="0 0 16 16"
@@ -293,7 +863,13 @@ const RightBoxes = () => {
           />
         </svg>
       </Box>
-      <Box text="Wallet 4" connectionPosition="left">
+      <Box
+        text="Wallet 4"
+        connectionPosition="left"
+        animation={{
+          delay: 1.8,
+        }}
+      >
         <svg
           className="h-6 w-6"
           viewBox="0 0 16 16"
@@ -313,7 +889,13 @@ const RightBoxes = () => {
 const LeftBoxes = () => {
   return (
     <div className="flex h-full flex-col justify-evenly">
-      <Box borderColor="border-orange-500/10" bgColor="bg-orange-500">
+      <Box
+        borderColor="border-orange-500/10"
+        bgColor="bg-orange-500"
+        animation={{
+          delay: 0.1,
+        }}
+      >
         <svg
           className="h-11 w-11"
           viewBox="0 -0.5 34 34"
@@ -328,7 +910,13 @@ const LeftBoxes = () => {
           />
         </svg>
       </Box>
-      <Box bgColor="bg-[#627EEA]" borderColor="border-[#627EEA]/10">
+      <Box
+        bgColor="bg-[#627EEA]"
+        borderColor="border-[#627EEA]/10"
+        animation={{
+          delay: 0.2,
+        }}
+      >
         <svg
           className="h-11 w-11"
           viewBox="0 0 32 32"
@@ -350,7 +938,13 @@ const LeftBoxes = () => {
           </g>
         </svg>
       </Box>
-      <Box bgColor="bg-[#EF0027]" borderColor="border-[#EF0027]/10">
+      <Box
+        bgColor="bg-[#EF0027]"
+        borderColor="border-[#EF0027]/10"
+        animation={{
+          delay: 0.3,
+        }}
+      >
         <svg
           className="h-11 w-11"
           viewBox="0 0 32 32"
@@ -365,7 +959,13 @@ const LeftBoxes = () => {
           </g>
         </svg>
       </Box>
-      <Box bgColor="bg-[#BFBBBB]" borderColor="border-[#BFBBBB]/10">
+      <Box
+        bgColor="bg-[#BFBBBB]"
+        borderColor="border-[#BFBBBB]/10"
+        animation={{
+          delay: 0.4,
+        }}
+      >
         <svg
           className="h-11 w-11"
           viewBox="0 0 32 32"
