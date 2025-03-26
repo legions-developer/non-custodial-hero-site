@@ -3,9 +3,9 @@ import React from "react";
 
 const HeroSection = () => {
   return (
-    <div className="h-[100svh] flex items-center justify-center">
+    <div className="h-[100svh] w-full flex items-center justify-center">
       {/* Main */}
-      <div className="h-[700px] items-center w-[1200px] flex flex-row justify-between relative">
+      <div className="h-[700px] shrink-0 items-center min-w-[1200px] w-[1200px] flex flex-row justify-between relative">
         <AnimatedConnectionsSVG />
         <LeftBoxes />
         <MiddleCircle />
@@ -17,7 +17,7 @@ const HeroSection = () => {
 
 export default HeroSection;
 
-const paths = [
+const firstPaths = [
   // Bitcoin Paths
   "M 95 96 c 340 -10, 40 245, 375 234",
   "M 95 106 c 330 -10, 30 245, 375 234",
@@ -25,17 +25,17 @@ const paths = [
   "M 95 126 c 310 -10, 10 245, 375 234",
   "M 95 136 c 300 -10, 0 245, 375 234",
   // Ethereum Paths
-  "M 95 252 c 200 10, -15 80, 375 78",
-  "M 95 262 c 190 10, -15 80, 375 78",
-  "M 95 272 c 180 10, -15 80, 375 78",
-  "M 95 282 c 170 10, -15 80, 375 78",
-  "M 95 292 c 160 10, -15 80, 375 78",
+  "M 95 252 c 200 -10, 50 80, 375 78",
+  "M 95 262 c 190 -10, 50 80, 375 78",
+  "M 95 272 c 180 -10, 50 80, 375 78",
+  "M 95 282 c 170 -10, 50 80, 375 78",
+  "M 95 292 c 160 -10, 50 80, 375 78",
   // TRX Paths
-  "M 95 448 c 200 10, 0 -80, 375 -78",
-  "M 95 438 c 190 10, 0 -80, 375 -78",
-  "M 95 428 c 180 10, 0 -80, 375 -78",
-  "M 95 418 c 170 10, 0 -80, 375 -78",
-  "M 95 408 c 160 10, 0 -80, 375 -78",
+  "M 95 448 c 200 10, 50 -80, 375 -78",
+  "M 95 438 c 190 10, 50 -80, 375 -78",
+  "M 95 428 c 180 10, 50 -80, 375 -78",
+  "M 95 418 c 170 10, 50 -80, 375 -78",
+  "M 95 408 c 160 10, 50 -80, 375 -78",
   // Litecoin Paths
   "M 95 604 c 340 10, 50 -245, 375 -234",
   "M 95 594 c 330 10, 40 -245, 375 -234",
@@ -44,33 +44,61 @@ const paths = [
   "M 95 564 c 300 10, 10 -245, 375 -234",
 ];
 
+const secondPaths = [
+  // 1st Box
+  "M 730 330 c 300 10, 0 -245, 375 -234",
+  "M 730 340 c 310 10, 10 -245, 375 -234",
+  "M 730 350 c 320 10, 20 -245, 375 -234",
+  "M 730 360 c 330 10, 30 -245, 375 -234",
+  "M 730 370 c 340 10, 40 -245, 375 -234",
+  // 2nd Box
+  "M 730 330 c 260 0, 150 -80, 375 -78",
+  "M 730 340 c 270 0, 155 -80, 375 -78",
+  "M 730 350 c 280 0, 160 -80, 375 -78",
+  "M 730 360 c 290 0, 165 -80, 375 -78",
+  "M 730 370 c 300 0, 170 -80, 375 -78",
+  // 3rd Box
+  "M 730 370 c 300 20, 140 80, 375 78",
+  "M 730 360 c 290 15, 150 80, 375 78",
+  "M 730 350 c 280 10, 160 80, 375 78",
+  "M 730 340 c 270 5, 170 80, 375 78",
+  "M 730 330 c 260 0, 180 80, 375 78",
+  // 4th Box
+  "M 730 370 c 300 10, 0 245, 375 234",
+  "M 730 360 c 310 10, 10 245, 375 234",
+  "M 730 350 c 320 10, 20 245, 375 234",
+  "M 730 340 c 330 10, 30 245, 375 234",
+  "M 730 330 c 340 10, 40 245, 375 234",
+];
+
 const AnimatedConnectionsSVG = () => {
-  const getAnimationDelay = (index: number) => {
+  const getAnimationDelay = (index: number, extraDelay: number = 0) => {
     // First 5 paths (Bitcoin, index 0-4)
     if (index < 5) {
-      return index * 0.2;
+      return index * 0.2 + extraDelay;
     }
     // Second 5 paths (Ethereum, index 5-9)
     if (index >= 5 && index < 10) {
-      return (index - 5) * 0.2;
+      return (index - 5) * 0.2 + extraDelay;
     }
     // Third 5 paths (TRX, index 10-14)
     if (index >= 10 && index < 15) {
-      return (index - 10) * 0.2;
+      return (index - 10) * 0.2 + extraDelay;
     }
     // Last 5 paths (Litecoin, index 15-19)
     if (index >= 15) {
-      return (index - 15) * 0.2;
+      return (index - 15) * 0.2 + extraDelay;
     }
 
     // Remaining paths get default delay
-    return index * 0.1;
+    return index * 0.1 + extraDelay;
   };
 
   return (
     <svg className="h-full w-full absolute top-0 left-0" viewBox="0 0 1200 700">
+      {/* First Paths */}
       <g className="text-muted" fill="none" stroke="currentColor">
-        {paths.map((path, index) => {
+        {firstPaths.map((path, index) => {
           const seconds = getAnimationDelay(index);
 
           return (
@@ -86,7 +114,7 @@ const AnimatedConnectionsSVG = () => {
                 attributeName="stroke-dashoffset"
                 from="100"
                 to="0"
-                dur="0.5s"
+                dur="2s"
                 fill="freeze"
                 calcMode="spline"
                 keySplines="0, -1.59, 1, 3.67"
@@ -105,26 +133,88 @@ const AnimatedConnectionsSVG = () => {
           );
         })}
       </g>
+      {/* Second Paths */}
+      <g className="text-muted" fill="none" stroke="currentColor">
+        {secondPaths.map((path, index) => {
+          const seconds = getAnimationDelay(index);
+
+          return (
+            <path
+              key={index}
+              d={path}
+              fill="none"
+              strokeDasharray="100 100"
+              pathLength="100"
+              strokeOpacity="0"
+            >
+              <animate
+                attributeName="stroke-dashoffset"
+                from="100"
+                to="0"
+                dur="2s"
+                fill="freeze"
+                calcMode="spline"
+                keySplines="0, -1.59, 1, 3.67"
+                keyTimes="0; 1"
+                begin={`${seconds}s`}
+              />
+              <animate
+                attributeName="stroke-opacity"
+                dur="0.2s"
+                from="0"
+                to="1"
+                fill="freeze"
+                begin={`${seconds}s`}
+              />
+            </path>
+          );
+        })}
+      </g>
+
       <defs>
         <radialGradient id="white-grad" fx="0.5">
           <stop offset="0%" stopColor="white" />
           <stop offset="100%" stopColor="transparent" />
         </radialGradient>
-        {paths.map((path, index) => {
+        {firstPaths.map((path, index) => {
           return (
-            <mask key={index} id={`mask-${index}`}>
+            <mask key={index} id={`first-mask-${index}`}>
+              <path d={path} stroke="white" fill="none" />
+            </mask>
+          );
+        })}
+        {secondPaths.map((path, index) => {
+          return (
+            <mask key={index} id={`second-mask-${index}`}>
               <path d={path} stroke="white" fill="none" />
             </mask>
           );
         })}
       </defs>
-      {paths.map((path, index) => {
+      {firstPaths.map((path, index) => {
         return (
-          <g key={index} mask={`url(#mask-${index})`}>
+          <g key={index} mask={`url(#first-mask-${index})`}>
             <circle
               style={{
                 offsetPath: `path("${path} h 180")`,
                 animationDelay: `${getAnimationDelay(index)}s`,
+              }}
+              className="cross-chain"
+              cx="0"
+              cy="0"
+              r="100"
+              fill="url(#white-grad)"
+            />
+          </g>
+        );
+      })}
+      {secondPaths.map((path, index) => {
+        return (
+          <g key={index} mask={`url(#second-mask-${index})`}>
+            <circle
+              style={{
+                offsetPath: `path("${path} h 180")`,
+                animationDelay: `${getAnimationDelay(index, 2.6)}s`,
               }}
               className="cross-chain"
               cx="0"

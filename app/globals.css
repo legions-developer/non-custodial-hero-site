@@ -126,7 +126,7 @@
   animation: cross-chain-animation-path;
   animation-iteration-count: infinite;
   animation-timing-function: cubic-bezier(0, -1.59, 1, 3.67);
-  animation-duration: 7s;
+  animation-duration: 5s;
 }
 
 @keyframes cross-chain-animation-path {
