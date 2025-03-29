@@ -31,9 +31,12 @@ yarn dev
 
 ## 🛠️ Built With
 
+- [SVG Animations] (https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/animate) - Animating SVG via Animate tag 
+- [TailwindCSS](https://tailwindcss.com/) - CSS framework
 - [Next.js](https://nextjs.org) - The React Framework for Production
 - [React](https://reactjs.org) - A JavaScript library for building user interfaces
 - [TypeScript](https://www.typescriptlang.org) - For type-safe code
+- [MotionDev](https://motion.dev) - A Motion library to animate components also known as framer motion
 - Modern UI/UX principles
 
 ## 📝 Development
@@ -41,3 +44,8 @@ yarn dev
 The application will automatically update as you edit files. Start by editing `app/page.tsx` to see your changes in real-time!
 
 > ⚠️ Created by [Legion](https://legions.dev)
+
+> [!IMPORTANT]
+> ### Credits
+> - Created By [Legion](https://legions.dev)
+> - Designed By [Bogdan • QClay | Awsmd](https://x.com/bogdan_qclay)
