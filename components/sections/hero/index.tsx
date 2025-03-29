@@ -26,6 +26,20 @@ const headerOptions = [
   },
 ];
 
+const easeBezier = [0.175, 0.885, 0.32, 1.1];
+
+const heroSectionMotionConfig = {
+  initial: { opacity: 0, scale: 0, y: 20 },
+  animate: { opacity: 1, scale: 1, y: 0 },
+  transition: { duration: 1, ease: easeBezier },
+};
+
+const titleSectionMotionConfig = {
+  initial: { opacity: 0, scale: 0.8, y: 40 },
+  animate: { opacity: 1, scale: 1, y: 0 },
+  transition: { duration: 1.5, ease: easeBezier },
+};
+
 const HeroSection = () => {
   return (
     <AuroraBackground>
@@ -41,7 +55,7 @@ const HeroSection = () => {
           refresh
         />
         {/* Main */}
-        <div className="h-[700px] shrink-0 items-center min-w-[1200px] w-[1200px] flex flex-row justify-between relative get-skewed">
+        <div className="h-[700px] shrink-0 items-center min-w-[1200px] w-[1200px] flex flex-row justify-between relative get-skewed scale-110">
           <AnimatedConnectionsSVG />
           <LeftBoxes />
           <MiddleCircle />
@@ -51,22 +65,91 @@ const HeroSection = () => {
       {/* Bottom Title and description */}
       <div className="absolute bottom-4 justify-center items-center left-0 right-0 p-4 gap-3 flex flex-col text-center">
         <div className="flex flex-row items-center gap-4">
-          <div className="iceberg text-xl bg-gradient-to-r from-gray-500 to-white text-transparent bg-clip-text">
+          <motion.div
+            {...heroSectionMotionConfig}
+            className="iceberg text-xl bg-gradient-to-r from-gray-500 to-white text-transparent bg-clip-text"
+          >
             L E G I O N
-          </div>
-          <div className="h-1 w-1 bg-white/80 rounded-full"></div>
-          <div className="bg-gradient-to-br from-emerald-500 via-emerald-400 to-emerald-500 px-2 py-1 rounded text-xs font-semibold text-black">
+          </motion.div>
+          <motion.div
+            {...heroSectionMotionConfig}
+            className="h-1 w-1 bg-white/80 rounded-full"
+          ></motion.div>
+          <motion.div
+            {...heroSectionMotionConfig}
+            transition={{
+              duration: 1,
+              delay: 0.4,
+              ease: easeBezier,
+            }}
+            className="bg-gradient-to-br from-emerald-500 via-emerald-400 to-emerald-500 px-2 py-1 rounded text-xs font-semibold text-black"
+          >
             A Non-Custodial Option Protocol
+          </motion.div>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <h1 className="text-5xl flex flex-row items-center gap-2">
+            <motion.div
+              {...titleSectionMotionConfig}
+              transition={{
+                ...titleSectionMotionConfig.transition,
+                delay: 0.2,
+              }}
+            >
+              Web3
+            </motion.div>
+            <motion.div
+              {...titleSectionMotionConfig}
+              transition={{
+                ...titleSectionMotionConfig.transition,
+                delay: 0.4,
+              }}
+            >
+              Native
+            </motion.div>
+          </h1>
+          <h2 className="text-5xl flex flex-row items-center gap-2">
+            <motion.div
+              {...titleSectionMotionConfig}
+              transition={{
+                ...titleSectionMotionConfig.transition,
+                delay: 0.6,
+              }}
+            >
+              Decentralized
+            </motion.div>
+            <motion.div
+              {...titleSectionMotionConfig}
+              transition={{
+                ...titleSectionMotionConfig.transition,
+                delay: 0.8,
+              }}
+            >
+              Platform
+            </motion.div>
+          </h2>
+          <div className="text-muted-foreground text-sm max-w-[500px] px-4">
+            <motion.div
+              {...titleSectionMotionConfig}
+              transition={{
+                ...titleSectionMotionConfig.transition,
+                delay: 1,
+              }}
+            >
+              Building the next generation of decentralized applications powered
+              by
+            </motion.div>
+            <motion.div
+              {...titleSectionMotionConfig}
+              transition={{
+                ...titleSectionMotionConfig.transition,
+                delay: 1.2,
+              }}
+            >
+              blockchain technology and trustless infrastructure.
+            </motion.div>
           </div>
         </div>
-        <div>
-          <h1 className="text-5xl">Web3 Native</h1>
-          <h2 className="text-5xl">Decentralized Platform</h2>
-        </div>
-        <p className="text-sm max-w-[500px] px-4 text-white/80">
-          Building the next generation of decentralized applications powered by
-          blockchain technology and trustless infrastructure.
-        </p>
       </div>
     </AuroraBackground>
   );
@@ -120,7 +203,7 @@ const Header = () => {
           </p>
         ))}
         <motion.div
-          className="absolute -bottom-3.5 h-[2px] bg-gradient-to-r from-[#22262E] via-white/50 to-[#22262E] rounded-full shadow-[0_0_25px_2px_rgba(255,255,255,1)]"
+          className="absolute -bottom-[16px] h-[2px] bg-gradient-to-r from-[#22262E] via-white/70 to-[#22262E] rounded-full shadow-[0_0_20px_1px_rgba(255,255,255,1)]"
           initial={false}
           animate={{
             width: dimensions.width,

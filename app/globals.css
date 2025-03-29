@@ -151,7 +151,7 @@
 }
 
 .get-skewed {
-  transform: skewY(-10deg) skewX(30deg) translateX(-40px) translateY(-20px);
+  transform: skewY(-10deg) skewX(30deg) translateX(-10px) translateY(-20px);
 }
 
 .iceberg {
