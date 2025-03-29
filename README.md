@@ -42,9 +42,7 @@ yarn dev
 ## 📝 Development
 
 The application will automatically update as you edit files. Start by editing `app/page.tsx` to see your changes in real-time!
-
-> ⚠️ Created by [Legion](https://legions.dev)
-
+ 
 > [!IMPORTANT]
 > ### Credits
 > - Created By [Legion](https://legions.dev)
