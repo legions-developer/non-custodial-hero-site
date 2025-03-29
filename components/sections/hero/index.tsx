@@ -55,7 +55,7 @@ const HeroSection = () => {
           refresh
         />
         {/* Main */}
-        <div className="h-[700px] shrink-0 items-center min-w-[1200px] w-[1200px] flex flex-row justify-between relative get-skewed scale-110">
+        <div className="h-[700px] shrink-0 items-center min-w-[1200px] w-[1200px] flex flex-row justify-between relative get-skewed scale-110 select-none">
           <AnimatedConnectionsSVG />
           <LeftBoxes />
           <MiddleCircle />
@@ -87,8 +87,8 @@ const HeroSection = () => {
             A Non-Custodial Option Protocol
           </motion.div>
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <h1 className="text-5xl flex flex-row items-center gap-2">
+        <div className="flex flex-col items-center sm:gap-2">
+          <h1 className="text-4xl sm:text-5xl flex flex-row items-center gap-2">
             <motion.div
               {...titleSectionMotionConfig}
               transition={{
@@ -108,7 +108,7 @@ const HeroSection = () => {
               Native
             </motion.div>
           </h1>
-          <h2 className="text-5xl flex flex-row items-center gap-2">
+          <h2 className="text-4xl sm:text-5xl flex flex-row items-center gap-2">
             <motion.div
               {...titleSectionMotionConfig}
               transition={{
@@ -128,7 +128,7 @@ const HeroSection = () => {
               Platform
             </motion.div>
           </h2>
-          <div className="text-muted-foreground text-sm max-w-[500px] px-4">
+          <div className="text-muted-foreground text-xs sm:text-sm sm:max-w-[500px] sm:px-4">
             <motion.div
               {...titleSectionMotionConfig}
               transition={{
@@ -179,9 +179,9 @@ const Header = () => {
       initial={{ opacity: 0, scale: 0.95, y: -100 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
-      className="h-[60px] px-1.5 absolute top-8 bg-white/[0.02] border border-white/[0.02] rounded-xl backdrop-blur-3xl flex items-center gap-8 z-50 overflow-hidden"
+      className="h-[60px] px-1.5 absolute top-8 bg-white/[0.02] border border-white/[0.02] rounded-xl backdrop-blur-3xl flex items-center gap-8 z-50 overflow-hidden pl-4 sm:pl-0"
     >
-      <div className="h-12 w-12 shrink-0 rounded-lg bg-background flex items-center justify-center">
+      <div className="h-12 w-12 shrink-0 rounded-lg bg-background sm:flex items-center justify-center hidden">
         <span className="text-white font-mono text-xl font-bold">L</span>
       </div>
       <div className="flex flex-row items-start gap-8 relative">

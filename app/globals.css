@@ -151,7 +151,13 @@
 }
 
 .get-skewed {
-  transform: skewY(-10deg) skewX(30deg) translateX(-10px) translateY(-20px);
+  transform: skewY(-10deg) skewX(30deg) translateX(20px) translateY(-20px);
+}
+
+@media (min-width: 640px) {
+  .get-skewed {
+    transform: skewY(-10deg) skewX(30deg) translateX(-10px) translateY(-20px);
+  }
 }
 
 .iceberg {
