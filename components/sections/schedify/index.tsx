@@ -120,7 +120,7 @@ const AnimatedSchedifyComponent = () => {
   }, []);
 
   return (
-    <div className="sm:h-92 w-[900px] flex flex-col sm:flex-row items-center sm:items-stretch">
+    <div className="sm:h-92 w-[900px] flex flex-col sm:flex-row items-center sm:items-center">
       {/* User Server */}
       <div className="shrink-0 h-92 w-64 border rounded-lg flex flex-col relative z-30 bg-white">
         <div className="p-2 border-b text-sm font-medium flex flex-row items-center gap-2">
