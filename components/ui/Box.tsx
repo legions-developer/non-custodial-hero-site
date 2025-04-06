@@ -53,7 +53,7 @@ const Box = ({
           connectionPosition === "right"
             ? "left-[100%] translate-x-1/3"
             : "right-[100%] -translate-x-1/3",
-          "absolute items-center flex flex-col justify-evenly top-1/2 -translate-y-1/2 h-2/3 w-3 rounded"
+          "absolute items-center flex flex-col justify-evenly top-1/2 bg-muted/50 -translate-y-1/2 h-2/3 w-3 rounded"
         )}
       >
         <div className="h-1.5 w-1.5 bg-white/15 rounded-full"></div>
